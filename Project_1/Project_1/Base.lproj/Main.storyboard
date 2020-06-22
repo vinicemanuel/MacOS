@@ -184,25 +184,37 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView id="rUC-SO-lVz">
+                                                        <tableCellView id="rUC-SO-lVz" customClass="PhotoCell" customModule="Project_1" customModuleProvider="target">
                                                             <rect key="frame" x="1" y="1" width="250" height="80"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="QRm-ed-8Cl">
-                                                                    <rect key="frame" x="-2" y="26" width="254" height="28"/>
+                                                                    <rect key="frame" x="-2" y="26" width="161" height="28"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="gip-iL-Zva">
                                                                         <font key="font" metaFont="system" size="24"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MEF-IR-htU">
+                                                                    <rect key="frame" x="181" y="16" width="48" height="48"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="48" id="7wD-uo-A2V"/>
+                                                                        <constraint firstAttribute="height" constant="48" id="Sba-fo-Niw"/>
+                                                                    </constraints>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="E3T-3R-NQn"/>
+                                                                </imageView>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="QRm-ed-8Cl" secondAttribute="trailing" id="6ce-DE-Nkd"/>
+                                                                <constraint firstItem="MEF-IR-htU" firstAttribute="leading" secondItem="QRm-ed-8Cl" secondAttribute="trailing" constant="24" id="8ON-BJ-JTc"/>
+                                                                <constraint firstAttribute="trailing" secondItem="MEF-IR-htU" secondAttribute="trailing" constant="21" id="KLb-K4-9Ay"/>
+                                                                <constraint firstItem="MEF-IR-htU" firstAttribute="centerY" secondItem="rUC-SO-lVz" secondAttribute="centerY" id="vpB-tG-BxH"/>
                                                                 <constraint firstItem="QRm-ed-8Cl" firstAttribute="leading" secondItem="rUC-SO-lVz" secondAttribute="leading" id="xFX-JQ-Yih"/>
                                                                 <constraint firstItem="QRm-ed-8Cl" firstAttribute="centerY" secondItem="rUC-SO-lVz" secondAttribute="centerY" id="yda-gR-KLc"/>
                                                             </constraints>
                                                             <connections>
+                                                                <outlet property="img" destination="MEF-IR-htU" id="QWm-gg-73e"/>
+                                                                <outlet property="imgTitle" destination="QRm-ed-8Cl" id="QSK-bn-f32"/>
                                                                 <outlet property="textField" destination="QRm-ed-8Cl" id="8AR-eg-4xI"/>
                                                             </connections>
                                                         </tableCellView>
@@ -217,7 +229,7 @@
                                     </subviews>
                                     <nil key="backgroundColor"/>
                                 </clipView>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="yfJ-o3-KWX">
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.20000000000000001" horizontal="YES" id="yfJ-o3-KWX">
                                     <rect key="frame" x="1" y="268" width="248" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

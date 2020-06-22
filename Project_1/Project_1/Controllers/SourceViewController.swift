@@ -41,9 +41,11 @@ extension SourceViewController: NSTableViewDataSource, NSTableViewDelegate{
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let view = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTableCellView else {return nil}
+        guard let view = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? PhotoCell else {return nil}
         
-        view.textField?.stringValue = pictures[row]
+        let imgName = pictures[row]
+        view.imgTitle.stringValue = imgName
+        view.img.image =  NSImage(named: imgName)
         return view
     }
     
