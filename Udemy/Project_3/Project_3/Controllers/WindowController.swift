@@ -11,11 +11,13 @@ import Cocoa
 class WindowController: NSWindowController {
     
     @IBOutlet weak var shareButton: NSButton!
+    @IBOutlet weak var alertButton: NSButton!
     
     override func windowDidLoad() {
         super.windowDidLoad()
         
         self.shareButton.sendAction(on: .leftMouseDown)
+        self.alertButton.sendAction(on: .leftMouseDown)
     }
 
 }

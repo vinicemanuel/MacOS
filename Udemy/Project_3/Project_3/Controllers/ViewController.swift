@@ -24,4 +24,20 @@ class ViewController: NSSplitViewController {
         let picker = NSSharingServicePicker(items: [image])
         picker.show(relativeTo: .zero, of: sender, preferredEdge: .minY)
     }
+    
+    @IBAction func showAlert(_ sender: Any) {
+        let alert = self.newAlert()
+        let alertResult = alert.runModal()
+        print(alertResult)
+    }
+    
+    func newAlert() -> NSAlert {
+        let alert = NSAlert()
+        alert.messageText = "alert title"
+        alert.informativeText = "allert Information"
+        alert.addButton(withTitle: "alert button 1")
+        alert.addButton(withTitle: "alert button 2")
+        
+        return alert
+    }
 }
