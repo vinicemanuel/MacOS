@@ -39,20 +39,23 @@ class ViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
-    func navigationClicked(){
-        print("dale meu consagrado")
+    func addRow() {
+        for case let row as NSStackView in rows.arrangedSubviews {
+            row.addArrangedSubview(self.makeWebView())
+        }
     }
     
-    func adjustRows(){
-        print("dale meu consagrado")
-    }
-    
-    func adjustCols(){
-        print("dale meu consagrado")
-    }
-    
-    func urlEntered(){
-        print("dale meu consagrado")
+    func deleteRow() {
+        guard let firstRow = self.rows.arrangedSubviews.first as? NSStackView, firstRow.arrangedSubviews.count > 1 else {
+            return
+        }
+        
+        for case let row as NSStackView in self.rows.arrangedSubviews {
+            if let last = row.arrangedSubviews.last {
+                row.removeArrangedSubview(last)
+                last.removeFromSuperview()
+            }
+        }
     }
     
     func makeWebView() -> NSView {

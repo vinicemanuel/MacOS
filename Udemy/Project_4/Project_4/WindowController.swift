@@ -22,18 +22,22 @@ class WindowController: NSWindowController {
     }
     
     @IBAction func navigationClicked(_ sender: NSSegmentedControl) {
-        self.vwController?.navigationClicked()
+        
     }
     
     @IBAction func adjustRows(_ sender: NSSegmentedControl) {
-        self.vwController?.adjustRows()
+        
     }
     
-    @IBAction func adjustCols(_ sender: NSSegmentedControl) {
-        self.vwController?.adjustCols()
+    @IBAction func adjustColumns(_ sender: NSSegmentedControl) {
+        if sender.selectedSegment == 0 {
+            self.vwController?.addRow()
+        } else {
+            self.vwController?.deleteRow()
+        }
     }
     
     @IBAction func urlEntered(_ sender: NSTextField) {
-        self.vwController?.urlEntered()
+        
     }
 }
