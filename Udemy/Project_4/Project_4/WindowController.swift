@@ -26,14 +26,18 @@ class WindowController: NSWindowController {
     }
     
     @IBAction func adjustRows(_ sender: NSSegmentedControl) {
-        
-    }
-    
-    @IBAction func adjustColumns(_ sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
             self.vwController?.addRow()
         } else {
             self.vwController?.deleteRow()
+        }
+    }
+    
+    @IBAction func adjustColumns(_ sender: NSSegmentedControl) {
+        if sender.selectedSegment == 0 {
+            self.vwController?.addColunm()
+        } else {
+            self.vwController?.deleteColunm()
         }
     }
     

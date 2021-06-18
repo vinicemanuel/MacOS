@@ -40,12 +40,30 @@ class ViewController: NSViewController, WKNavigationDelegate {
     }
     
     func addRow() {
+        let colunmCount = (rows.arrangedSubviews[0] as! NSStackView).arrangedSubviews.count
+        let viewArray = (0..<colunmCount).map{ _ in makeWebView() }
+        let row = NSStackView(views: viewArray)
+        row.distribution = .fillEqually
+        rows.addArrangedSubview(row)
+    }
+    
+    func deleteRow() {
+        guard rows.arrangedSubviews.count > 1 else { return }
+        guard let rowToRemove = rows.arrangedSubviews.last as? NSStackView else { return }
+        for cell in rowToRemove.arrangedSubviews {
+            cell.removeFromSuperview()
+        }
+        
+        rows.removeArrangedSubview(rowToRemove)
+    }
+    
+    func addColunm() {
         for case let row as NSStackView in rows.arrangedSubviews {
             row.addArrangedSubview(self.makeWebView())
         }
     }
     
-    func deleteRow() {
+    func deleteColunm() {
         guard let firstRow = self.rows.arrangedSubviews.first as? NSStackView, firstRow.arrangedSubviews.count > 1 else {
             return
         }
