@@ -9,9 +9,10 @@
 import Cocoa
 import WebKit
 
-class ViewController: NSViewController, WKNavigationDelegate {
+class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognizerDelegate {
     
     var rows: NSStackView!
+    var selectedWebView: WKWebView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,13 +77,37 @@ class ViewController: NSViewController, WKNavigationDelegate {
         }
     }
     
-    func makeWebView() -> NSView {
+    private func makeWebView() -> NSView {
     let webView = WKWebView()
         webView.navigationDelegate = self
         webView.wantsLayer = true
         webView.load(URLRequest(url: URL(string: "https://www.apple.com")!))
         
+        let recognizer = NSClickGestureRecognizer(target: self, action: #selector(webViewClicked(recognizer:)))
+        recognizer.delegate = self
+        webView.addGestureRecognizer(recognizer)
+        
         return webView
+    }
+    
+    private func select(webView: WKWebView) {
+        self.selectedWebView = webView
+        self.selectedWebView.layer?.borderWidth = 4
+        self.selectedWebView.layer?.borderColor = NSColor.blue.cgColor
+    }
+    
+    @objc private func webViewClicked(recognizer: NSClickGestureRecognizer) {
+        guard let newSelectedWebView = recognizer.view as? WKWebView else { return }
+        
+        if let selectedWebView = self.selectedWebView {
+            selectedWebView.layer?.borderWidth = 0
+        }
+        
+        self.select(webView: newSelectedWebView)
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: NSGestureRecognizer, shouldAttemptToRecognizeWith event: NSEvent) -> Bool {
+        return gestureRecognizer.view != self.selectedWebView
     }
 }
 
