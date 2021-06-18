@@ -87,6 +87,10 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         recognizer.delegate = self
         webView.addGestureRecognizer(recognizer)
         
+        if self.selectedWebView == nil {
+            self.select(webView: webView)
+        }
+        
         return webView
     }
     
