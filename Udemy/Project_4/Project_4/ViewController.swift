@@ -13,6 +13,7 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
     
     var rows: NSStackView!
     var selectedWebView: WKWebView!
+    var AddressEntryDelegate: AddresEntryProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,6 +115,8 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         self.selectedWebView = webView
         self.selectedWebView.layer?.borderWidth = 4
         self.selectedWebView.layer?.borderColor = NSColor.blue.cgColor
+        
+        self.AddressEntryDelegate?.configAdress(adress: selectedWebView.url?.absoluteString ?? "")
     }
     
     @objc private func webViewClicked(recognizer: NSClickGestureRecognizer) {
@@ -126,8 +129,16 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         self.select(webView: newSelectedWebView)
     }
     
+    //MARK: - NSGestureRecognizerDelegate
     func gestureRecognizer(_ gestureRecognizer: NSGestureRecognizer, shouldAttemptToRecognizeWith event: NSEvent) -> Bool {
         return gestureRecognizer.view != self.selectedWebView
+    }
+    
+    //MARK: - WKNavigationDelegate
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        if webView != self.selectedWebView { return }
+        
+        self.AddressEntryDelegate?.configAdress(adress: webView.url?.absoluteString ?? "")
     }
 }
 

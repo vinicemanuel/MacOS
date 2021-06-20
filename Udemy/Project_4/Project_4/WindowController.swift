@@ -8,9 +8,13 @@
 
 import Cocoa
 
-class WindowController: NSWindowController {
+protocol AddresEntryProtocol {
+    func configAdress(adress: String)
+}
+
+class WindowController: NSWindowController, AddresEntryProtocol {
     
-    @IBOutlet weak var addresEntry: NSTextField!
+    @IBOutlet weak var addressEntry: NSTextField!
     var vwController: ViewController?
 
     override func windowDidLoad() {
@@ -19,6 +23,7 @@ class WindowController: NSWindowController {
         self.window?.titleVisibility = .hidden
         
         self.vwController = self.window?.contentViewController as? ViewController
+        self.vwController?.AddressEntryDelegate = self
     }
     
     @IBAction func navigationClicked(_ sender: NSSegmentedControl) {
@@ -47,5 +52,9 @@ class WindowController: NSWindowController {
     
     @IBAction func urlEntered(_ sender: NSTextField) {
         self.vwController?.openURL(urlString: sender.stringValue)
+    }
+    
+    func configAdress(adress: String) {
+        self.addressEntry.stringValue = adress
     }
 }
