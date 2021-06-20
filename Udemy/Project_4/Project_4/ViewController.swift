@@ -148,9 +148,20 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         case .enterAdress:
             let button = NSButton(title: "Enter a URL", target: self, action: #selector(selectAddressEntry))
             button.setContentHuggingPriority(NSLayoutConstraint.Priority(10), for: .horizontal)
+            
             let customTouchBarItem = NSCustomTouchBarItem(identifier: identifier)
             customTouchBarItem.view = button
             return customTouchBarItem
+            
+        case .navigation:
+            let back = NSImage(named: NSImage.touchBarGoBackTemplateName)!
+            let fourward = NSImage(named: NSImage.touchBarGoForwardTemplateName)!
+            let segmentedControl = NSSegmentedControl(images: [back, fourward], trackingMode: .momentary, target: (self.AddressEntryDelegate as! WindowController), action: #selector((self.AddressEntryDelegate as! WindowController).navigationClicked(_:)))
+            
+            let customBarItem = NSCustomTouchBarItem(identifier: identifier)
+            customBarItem.view = segmentedControl
+            return customBarItem
+            
         default:
             return nil
         }
