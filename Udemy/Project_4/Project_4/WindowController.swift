@@ -17,10 +17,16 @@ protocol ReloadButtonProtocol {
     func loading(isLoading: Bool)
 }
 
-class WindowController: NSWindowController, AddresEntryProtocol, ReloadButtonProtocol {
-    
+protocol NavigationButtonProtocol {
+    func setGoBack(canGoBack: Bool)
+    func setGoFoward(canGoFoward: Bool)
+}
+
+class WindowController: NSWindowController, AddresEntryProtocol, ReloadButtonProtocol, NavigationButtonProtocol {
     @IBOutlet weak var reloadButton: NSButton!
     @IBOutlet weak var addressEntry: NSTextField!
+    @IBOutlet weak var navigationSegment: NSSegmentedControl!
+    
     var vwController: ViewController?
 
     override func windowDidLoad() {
@@ -31,6 +37,7 @@ class WindowController: NSWindowController, AddresEntryProtocol, ReloadButtonPro
         self.vwController = self.window?.contentViewController as? ViewController
         self.vwController?.addressEntryDelegate = self
         self.vwController?.loadingButtonDelegate = self
+        self.vwController?.navigationButtonDelegate = self
     }
     
     @IBAction func navigationClicked(_ sender: NSSegmentedControl) {
@@ -85,5 +92,14 @@ class WindowController: NSWindowController, AddresEntryProtocol, ReloadButtonPro
         } else {
             self.reloadButton.image = NSImage(named: "NSRefreshTemplate")
         }
+    }
+    
+    //MARK: - NavigationButtonsProtocol
+    func setGoBack(canGoBack: Bool) {
+        self.navigationSegment.setEnabled(canGoBack, forSegment: 0)
+    }
+    
+    func setGoFoward(canGoFoward: Bool) {
+        self.navigationSegment.setEnabled(canGoFoward, forSegment: 1)
     }
 }

@@ -822,6 +822,7 @@
                     </window>
                     <connections>
                         <outlet property="addressEntry" destination="CoM-E4-Qko" id="JxJ-zV-Jv5"/>
+                        <outlet property="navigationSegment" destination="lNz-ou-Kyi" id="U4r-X8-KQf"/>
                         <outlet property="reloadButton" destination="Fwu-h2-h3p" id="vAw-5L-NqN"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>

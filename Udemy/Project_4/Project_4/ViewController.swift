@@ -14,6 +14,7 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
     var selectedWebView: WKWebView!
     var addressEntryDelegate: AddresEntryProtocol?
     var loadingButtonDelegate: ReloadButtonProtocol?
+    var navigationButtonDelegate: NavigationButtonProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,6 +124,8 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         
         self.addressEntryDelegate?.configAdress(adress: selectedWebView.url?.absoluteString ?? "")
         self.loadingButtonDelegate?.loading(isLoading: selectedWebView.isLoading)
+        self.navigationButtonDelegate?.setGoBack(canGoBack: selectedWebView.canGoBack)
+        self.navigationButtonDelegate?.setGoFoward(canGoFoward: selectedWebView.canGoForward)
     }
     
     @objc private func webViewClicked(recognizer: NSClickGestureRecognizer) {
@@ -149,6 +152,8 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         if webView != self.selectedWebView { return }
         self.addressEntryDelegate?.configAdress(adress: webView.url?.absoluteString ?? "")
         self.loadingButtonDelegate?.loading(isLoading: webView.isLoading)
+        self.navigationButtonDelegate?.setGoBack(canGoBack: selectedWebView.canGoBack)
+        self.navigationButtonDelegate?.setGoFoward(canGoFoward: selectedWebView.canGoForward)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
