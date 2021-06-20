@@ -13,8 +13,13 @@ protocol AddresEntryProtocol {
     func makeFirstResponder()
 }
 
-class WindowController: NSWindowController, AddresEntryProtocol {
+protocol ReloadButtonProtocol {
+    func loading(isLoading: Bool)
+}
+
+class WindowController: NSWindowController, AddresEntryProtocol, ReloadButtonProtocol {
     
+    @IBOutlet weak var reloadButton: NSButton!
     @IBOutlet weak var addressEntry: NSTextField!
     var vwController: ViewController?
 
@@ -24,7 +29,8 @@ class WindowController: NSWindowController, AddresEntryProtocol {
         self.window?.titleVisibility = .hidden
         
         self.vwController = self.window?.contentViewController as? ViewController
-        self.vwController?.AddressEntryDelegate = self
+        self.vwController?.addressEntryDelegate = self
+        self.vwController?.loadingButtonDelegate = self
     }
     
     @IBAction func navigationClicked(_ sender: NSSegmentedControl) {
@@ -58,6 +64,10 @@ class WindowController: NSWindowController, AddresEntryProtocol {
     override func cancelOperation(_ sender: Any?) {
         self.window?.makeFirstResponder(self.vwController)
     }
+
+    @IBAction func reload(_ sender: NSButton) {
+        self.vwController?.reload()
+    }
     
     //MARK: - AddresEntryProtocol
     func configAdress(adress: String) {
@@ -66,5 +76,14 @@ class WindowController: NSWindowController, AddresEntryProtocol {
     
     func makeFirstResponder() {
         self.window?.makeFirstResponder(self.addressEntry)
+    }
+    
+    //MARK: - ReloadButtonProtocol
+    func loading(isLoading: Bool) {
+        if isLoading {
+            self.reloadButton.image = NSImage(named: "NSStopProgressTemplate")
+        } else {
+            self.reloadButton.image = NSImage(named: "NSRefreshTemplate")
+        }
     }
 }

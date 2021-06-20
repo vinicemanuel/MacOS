@@ -12,7 +12,8 @@ import WebKit
 class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognizerDelegate, NSTouchBarDelegate, NSSharingServicePickerTouchBarItemDelegate {
     var rows: NSStackView!
     var selectedWebView: WKWebView!
-    var AddressEntryDelegate: AddresEntryProtocol?
+    var addressEntryDelegate: AddresEntryProtocol?
+    var loadingButtonDelegate: ReloadButtonProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +94,11 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         selected.goForward()
     }
     
+    func reload() {
+        guard let selected = self.selectedWebView else { return }
+        selected.reload()
+    }
+    
     private func makeWebView() -> NSView {
     let webView = WKWebView()
         webView.navigationDelegate = self
@@ -115,7 +121,8 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         self.selectedWebView.layer?.borderWidth = 4
         self.selectedWebView.layer?.borderColor = NSColor.blue.cgColor
         
-        self.AddressEntryDelegate?.configAdress(adress: selectedWebView.url?.absoluteString ?? "")
+        self.addressEntryDelegate?.configAdress(adress: selectedWebView.url?.absoluteString ?? "")
+        self.loadingButtonDelegate?.loading(isLoading: selectedWebView.isLoading)
     }
     
     @objc private func webViewClicked(recognizer: NSClickGestureRecognizer) {
@@ -129,7 +136,7 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
     }
     
     @objc func selectAddressEntry() {
-        self.AddressEntryDelegate?.makeFirstResponder()
+        self.addressEntryDelegate?.makeFirstResponder()
     }
     
     //MARK: - NSGestureRecognizerDelegate
@@ -140,8 +147,13 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
     //MARK: - WKNavigationDelegate
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         if webView != self.selectedWebView { return }
-        
-        self.AddressEntryDelegate?.configAdress(adress: webView.url?.absoluteString ?? "")
+        self.addressEntryDelegate?.configAdress(adress: webView.url?.absoluteString ?? "")
+        self.loadingButtonDelegate?.loading(isLoading: webView.isLoading)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if webView != self.selectedWebView { return }
+        self.loadingButtonDelegate?.loading(isLoading: webView.isLoading)
     }
     
     //MARK: - NSTouchBarDelegate
@@ -159,7 +171,7 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         case .navigation:
             let back = NSImage(named: NSImage.touchBarGoBackTemplateName)!
             let fourward = NSImage(named: NSImage.touchBarGoForwardTemplateName)!
-            let segmentedControl = NSSegmentedControl(images: [back, fourward], trackingMode: .momentary, target: (self.AddressEntryDelegate as! WindowController), action: #selector((self.AddressEntryDelegate as! WindowController).navigationClicked(_:)))
+            let segmentedControl = NSSegmentedControl(images: [back, fourward], trackingMode: .momentary, target: (self.addressEntryDelegate as! WindowController), action: #selector((self.addressEntryDelegate as! WindowController).navigationClicked(_:)))
             
             let customBarItem = NSCustomTouchBarItem(identifier: identifier)
             customBarItem.view = segmentedControl
@@ -171,7 +183,7 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
             return picker
             
         case .adjustRows:
-            let control = NSSegmentedControl(labels: ["Add Row", "Remove Row"], trackingMode: .momentary, target: (self.AddressEntryDelegate as! WindowController), action: #selector((self.AddressEntryDelegate as! WindowController).adjustRows(_:)))
+            let control = NSSegmentedControl(labels: ["Add Row", "Remove Row"], trackingMode: .momentary, target: (self.addressEntryDelegate as! WindowController), action: #selector((self.addressEntryDelegate as! WindowController).adjustRows(_:)))
             
             let customBarItem = NSCustomTouchBarItem(identifier: identifier)
             customBarItem.customizationLabel = "Rows"
@@ -179,7 +191,7 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
             return customBarItem
             
         case .adjustColumns:
-            let control = NSSegmentedControl(labels: ["Add Column", "Remove Column"], trackingMode: .momentary, target: (self.AddressEntryDelegate as! WindowController), action: #selector((self.AddressEntryDelegate as! WindowController).adjustColumns(_:)))
+            let control = NSSegmentedControl(labels: ["Add Column", "Remove Column"], trackingMode: .momentary, target: (self.addressEntryDelegate as! WindowController), action: #selector((self.addressEntryDelegate as! WindowController).adjustColumns(_:)))
             
             let customBarItem = NSCustomTouchBarItem(identifier: identifier)
             customBarItem.customizationLabel = "Column"

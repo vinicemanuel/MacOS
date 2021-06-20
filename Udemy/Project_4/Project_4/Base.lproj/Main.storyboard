@@ -688,9 +688,9 @@
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="650" height="309"/>
+                        <rect key="contentRect" x="196" y="240" width="800" height="800"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <value key="minSize" type="size" width="650" height="309"/>
+                        <value key="minSize" type="size" width="800" height="800"/>
                         <toolbar key="toolbar" implicitIdentifier="83719EE7-CBC6-4080-B0C4-C2C59B10E3AE" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="r7i-Fi-b1l">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="fDX-Hv-10o"/>
@@ -787,11 +787,27 @@
                                         </textFieldCell>
                                     </textField>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="57DB910C-7FF0-4AD6-AC1E-0A5157AF1EA9" label="" paletteLabel="" image="NSRefreshTemplate" id="v3u-ta-Zgd">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="20" height="20"/>
+                                    <size key="maxSize" width="40" height="40"/>
+                                    <button key="view" verticalHuggingPriority="750" id="Fwu-h2-h3p">
+                                        <rect key="frame" x="0.0" y="14" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSRefreshTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="I7w-27-aIA">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="reload:" target="B8D-0N-5wS" id="JkV-jx-ax4"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="2A7-8R-lSr"/>
-                                <toolbarItem reference="fDX-Hv-10o"/>
                                 <toolbarItem reference="9R5-7S-nPM"/>
+                                <toolbarItem reference="v3u-ta-Zgd"/>
                                 <toolbarItem reference="fDX-Hv-10o"/>
                                 <toolbarItem reference="yVm-iN-p2u"/>
                                 <toolbarItem reference="QK1-hw-g2g"/>
@@ -806,6 +822,7 @@
                     </window>
                     <connections>
                         <outlet property="addressEntry" destination="CoM-E4-Qko" id="JxJ-zV-Jv5"/>
+                        <outlet property="reloadButton" destination="Fwu-h2-h3p" id="vAw-5L-NqN"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
                 </windowController>
@@ -818,19 +835,20 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Project_4" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="34" y="795"/>
+            <point key="canvasLocation" x="34" y="1233"/>
         </scene>
     </scenes>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSGoLeftTemplate" width="9" height="12"/>
         <image name="NSGoRightTemplate" width="9" height="12"/>
+        <image name="NSRefreshTemplate" width="11" height="15"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
     </resources>
 </document>
