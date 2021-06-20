@@ -77,6 +77,22 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         }
     }
     
+    func openURL(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        guard let selected = self.selectedWebView else { return }
+        selected.load(URLRequest(url: url))
+    }
+    
+    func goBack() {
+        guard let selected = self.selectedWebView else { return }
+        selected.goBack()
+    }
+    
+    func goFoward() {
+        guard let selected = self.selectedWebView else { return }
+        selected.goForward()
+    }
+    
     private func makeWebView() -> NSView {
     let webView = WKWebView()
         webView.navigationDelegate = self

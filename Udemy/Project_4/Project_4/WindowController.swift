@@ -22,7 +22,11 @@ class WindowController: NSWindowController {
     }
     
     @IBAction func navigationClicked(_ sender: NSSegmentedControl) {
-        
+        if sender.selectedSegment == 0 {
+            self.vwController?.goBack()
+        } else {
+            self.vwController?.goFoward()
+        }
     }
     
     @IBAction func adjustRows(_ sender: NSSegmentedControl) {
@@ -42,6 +46,6 @@ class WindowController: NSWindowController {
     }
     
     @IBAction func urlEntered(_ sender: NSTextField) {
-        
+        self.vwController?.openURL(urlString: sender.stringValue)
     }
 }
