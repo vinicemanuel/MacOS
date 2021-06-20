@@ -9,8 +9,7 @@
 import Cocoa
 import WebKit
 
-class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognizerDelegate, NSTouchBarDelegate {
-    
+class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognizerDelegate, NSTouchBarDelegate, NSSharingServicePickerTouchBarItemDelegate {
     var rows: NSStackView!
     var selectedWebView: WKWebView!
     var AddressEntryDelegate: AddresEntryProtocol?
@@ -129,6 +128,10 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         self.select(webView: newSelectedWebView)
     }
     
+    @objc func selectAddressEntry() {
+        self.AddressEntryDelegate?.makeFirstResponder()
+    }
+    
     //MARK: - NSGestureRecognizerDelegate
     func gestureRecognizer(_ gestureRecognizer: NSGestureRecognizer, shouldAttemptToRecognizeWith event: NSEvent) -> Bool {
         return gestureRecognizer.view != self.selectedWebView
@@ -162,6 +165,36 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
             customBarItem.view = segmentedControl
             return customBarItem
             
+        case .sharingPicker:
+            let picker = NSSharingServicePickerTouchBarItem(identifier: identifier)
+            picker.delegate = self
+            return picker
+            
+        case .adjustRows:
+            let control = NSSegmentedControl(labels: ["Add Row", "Remove Row"], trackingMode: .momentary, target: (self.AddressEntryDelegate as! WindowController), action: #selector((self.AddressEntryDelegate as! WindowController).adjustRows(_:)))
+            
+            let customBarItem = NSCustomTouchBarItem(identifier: identifier)
+            customBarItem.customizationLabel = "Rows"
+            customBarItem.view = control
+            return customBarItem
+            
+        case .adjustColumns:
+            let control = NSSegmentedControl(labels: ["Add Column", "Remove Column"], trackingMode: .momentary, target: (self.AddressEntryDelegate as! WindowController), action: #selector((self.AddressEntryDelegate as! WindowController).adjustColumns(_:)))
+            
+            let customBarItem = NSCustomTouchBarItem(identifier: identifier)
+            customBarItem.customizationLabel = "Column"
+            customBarItem.view = control
+            return customBarItem
+            
+        case .adjustGrid:
+            let popover = NSPopoverTouchBarItem(identifier: identifier)
+            popover.collapsedRepresentationLabel = "Grid"
+            popover.customizationLabel = "Adjust Grid"
+            popover.popoverTouchBar = NSTouchBar()
+            popover.popoverTouchBar.delegate = self
+            popover.popoverTouchBar.defaultItemIdentifiers = [.adjustColumns, .adjustRows]
+            return popover
+            
         default:
             return nil
         }
@@ -182,8 +215,11 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         return touchBar
     }
     
-    @objc func selectAddressEntry() {
-        self.AddressEntryDelegate?.makeFirstResponder()
+    //MARK: - NSSharingServicePickerTouchBarItemDelegate
+    func items(for pickerTouchBarItem: NSSharingServicePickerTouchBarItem) -> [Any] {
+        guard let webView = self.selectedWebView else { return [] }
+        guard let urlString = webView.url?.absoluteString else { return [] }
+        return [urlString]
     }
 }
 
