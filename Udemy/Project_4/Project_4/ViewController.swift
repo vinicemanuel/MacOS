@@ -9,7 +9,7 @@
 import Cocoa
 import WebKit
 
-class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognizerDelegate {
+class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognizerDelegate, NSTouchBarDelegate {
     
     var rows: NSStackView!
     var selectedWebView: WKWebView!
@@ -139,6 +139,40 @@ class ViewController: NSViewController, WKNavigationDelegate, NSGestureRecognize
         if webView != self.selectedWebView { return }
         
         self.AddressEntryDelegate?.configAdress(adress: webView.url?.absoluteString ?? "")
+    }
+    
+    //MARK: - NSTouchBarDelegate
+    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
+        switch identifier {
+        
+        case .enterAdress:
+            let button = NSButton(title: "Enter a URL", target: self, action: #selector(selectAddressEntry))
+            button.setContentHuggingPriority(NSLayoutConstraint.Priority(10), for: .horizontal)
+            let customTouchBarItem = NSCustomTouchBarItem(identifier: identifier)
+            customTouchBarItem.view = button
+            return customTouchBarItem
+        default:
+            return nil
+        }
+    }
+    
+    override func makeTouchBar() -> NSTouchBar? {
+        NSApp.isAutomaticCustomizeTouchBarMenuItemEnabled = true
+        
+        let touchBar = NSTouchBar()
+        touchBar.customizationIdentifier = "Personal.Project-4"
+        touchBar.delegate = self
+        
+        touchBar.defaultItemIdentifiers = [.navigation, .adjustGrid, .enterAdress, .sharingPicker]
+        touchBar.principalItemIdentifier = .enterAdress
+        touchBar.customizationAllowedItemIdentifiers = [.sharingPicker, .adjustGrid, .adjustColumns, .adjustRows]
+        touchBar.customizationRequiredItemIdentifiers = [.enterAdress]
+        
+        return touchBar
+    }
+    
+    @objc func selectAddressEntry() {
+        self.AddressEntryDelegate?.makeFirstResponder()
     }
 }
 

@@ -12,6 +12,7 @@
 		09992D2F24B6063E00D5E945 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09992D2E24B6063E00D5E945 /* Assets.xcassets */; };
 		09992D3224B6063E00D5E945 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09992D3024B6063E00D5E945 /* Main.storyboard */; };
 		09CEE6A724B752E7007DABC8 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CEE6A624B752E7007DABC8 /* WindowController.swift */; };
+		09FC9A5C267F8313007F9F79 /* TouchBarItens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC9A5B267F8313007F9F79 /* TouchBarItens.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		09992D3324B6063E00D5E945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09992D3424B6063E00D5E945 /* Project_4.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Project_4.entitlements; sourceTree = "<group>"; };
 		09CEE6A624B752E7007DABC8 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
+		09FC9A5B267F8313007F9F79 /* TouchBarItens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchBarItens.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 		09992D2924B6063B00D5E945 /* Project_4 */ = {
 			isa = PBXGroup;
 			children = (
+				09FC9A5A267F82E0007F9F79 /* Entities */,
 				09CEE6A824B752ED007DABC8 /* Windows */,
 				09CEE6A924B7567F007DABC8 /* Controlleres */,
 				09992D2A24B6063B00D5E945 /* AppDelegate.swift */,
@@ -80,6 +83,14 @@
 				09992D2C24B6063B00D5E945 /* ViewController.swift */,
 			);
 			name = Controlleres;
+			sourceTree = "<group>";
+		};
+		09FC9A5A267F82E0007F9F79 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				09FC9A5B267F8313007F9F79 /* TouchBarItens.swift */,
+			);
+			name = Entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09992D2D24B6063B00D5E945 /* ViewController.swift in Sources */,
+				09FC9A5C267F8313007F9F79 /* TouchBarItens.swift in Sources */,
 				09CEE6A724B752E7007DABC8 /* WindowController.swift in Sources */,
 				09992D2B24B6063B00D5E945 /* AppDelegate.swift in Sources */,
 			);

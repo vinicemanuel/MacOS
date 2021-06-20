@@ -10,6 +10,7 @@ import Cocoa
 
 protocol AddresEntryProtocol {
     func configAdress(adress: String)
+    func makeFirstResponder()
 }
 
 class WindowController: NSWindowController, AddresEntryProtocol {
@@ -54,7 +55,16 @@ class WindowController: NSWindowController, AddresEntryProtocol {
         self.vwController?.openURL(urlString: sender.stringValue)
     }
     
+    override func cancelOperation(_ sender: Any?) {
+        self.window?.makeFirstResponder(self.vwController)
+    }
+    
+    //MARK: - AddresEntryProtocol
     func configAdress(adress: String) {
         self.addressEntry.stringValue = adress
+    }
+    
+    func makeFirstResponder() {
+        self.window?.makeFirstResponder(self.addressEntry)
     }
 }
