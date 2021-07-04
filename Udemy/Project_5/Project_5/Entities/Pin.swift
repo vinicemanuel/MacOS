@@ -10,6 +10,7 @@ import MapKit
 
 class Pin: NSObject, MKAnnotation {
     var title: String?
+    var subtitle: String?
     var coordinate: CLLocationCoordinate2D
     var color: NSColor
     
