@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="Photo" customModule="Project_7" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="MsR-4s-oI6" id="FU0-3n-xte"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MsR-4s-oI6">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="p3x-gk-nAQ"/>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="MsR-4s-oI6" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="GFg-SM-vc9"/>
+                <constraint firstAttribute="bottom" secondItem="MsR-4s-oI6" secondAttribute="bottom" id="ITk-b0-guS"/>
+                <constraint firstAttribute="trailing" secondItem="MsR-4s-oI6" secondAttribute="trailing" id="UXK-h4-tso"/>
+                <constraint firstItem="MsR-4s-oI6" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="bhY-7G-vER"/>
+            </constraints>
+            <point key="canvasLocation" x="-163" y="154"/>
+        </customView>
+        <collectionViewItem id="iY8-uL-7hG" customClass="Photo" customModule="Project_7" customModuleProvider="target"/>
+    </objects>
+</document>
