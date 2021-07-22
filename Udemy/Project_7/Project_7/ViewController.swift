@@ -37,7 +37,6 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
             return item
         }
         
-        pictureItem.view.wantsLayer = true
         pictureItem.view.layer?.backgroundColor = NSColor.red.cgColor
         
         return pictureItem
