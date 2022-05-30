@@ -11,11 +11,28 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
 
     @IBOutlet weak var collectionView: NSCollectionView!
     
+    var photos = [URL]()
+    
+    lazy var photosDirectory: URL = {
+        let fm = FileManager.default
+        var paths = fm.urls(for: .documentDirectory, in: .userDomainMask)
+        var saveDirectory = paths[0]
+        saveDirectory.appendPathComponent("SlideMark")
+        
+        if fm.fileExists(atPath: saveDirectory.path) == false {
+            try? fm.createDirectory(at: saveDirectory, withIntermediateDirectories: true)
+        }
+        
+        return saveDirectory
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
+        self.photos = self.loadPhotos()
     }
 
     override var representedObject: Any? {
@@ -24,11 +41,24 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
         }
     }
     
+    private func loadPhotos() -> [URL] {
+        do {
+            let fm = FileManager.default
+            var files = try fm.contentsOfDirectory(at: self.photosDirectory, includingPropertiesForKeys: nil)
+            files.removeAll(where: {$0.pathExtension != "jpg" && $0.pathExtension != "png"})
+            
+            return files
+        } catch {
+            print(error.localizedDescription)
+            return []
+        }
+    }
+    
     //MARK: - NSCollectionViewDelegate
     
     //MARK: - NSCollectionViewDataSource
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+        return self.photos.count
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
@@ -37,7 +67,7 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
             return item
         }
         
-        pictureItem.view.layer?.backgroundColor = NSColor.red.cgColor
+        pictureItem.imageView?.image = NSImage(contentsOf: self.photos[indexPath.item])
         
         return pictureItem
     }
