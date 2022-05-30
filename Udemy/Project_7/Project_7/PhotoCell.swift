@@ -1,5 +1,5 @@
 //
-//  Photo.swift
+//  PhotoCell.swift
 //  Project_7
 //
 //  Created by Vinicius Emanuel on 22/07/21.
@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class Photo: NSCollectionViewItem {
+class PhotoCell: NSCollectionViewItem {
     private let selectedBorderThickness: CGFloat = 3
     
     override var isSelected: Bool {

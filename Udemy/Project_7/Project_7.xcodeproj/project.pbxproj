@@ -11,8 +11,8 @@
 		0953410B26A9A81900CDB9F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0953410A26A9A81900CDB9F6 /* ViewController.swift */; };
 		0953410D26A9A81A00CDB9F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0953410C26A9A81A00CDB9F6 /* Assets.xcassets */; };
 		0953411026A9A81A00CDB9F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0953410E26A9A81A00CDB9F6 /* Main.storyboard */; };
-		0953411B26A9ABAD00CDB9F6 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0953411926A9ABAD00CDB9F6 /* Photo.swift */; };
-		0953411C26A9ABAD00CDB9F6 /* Photo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0953411A26A9ABAD00CDB9F6 /* Photo.xib */; };
+		0953411B26A9ABAD00CDB9F6 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0953411926A9ABAD00CDB9F6 /* PhotoCell.swift */; };
+		0953411C26A9ABAD00CDB9F6 /* PhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0953411A26A9ABAD00CDB9F6 /* PhotoCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,8 +23,8 @@
 		0953410F26A9A81A00CDB9F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0953411126A9A81A00CDB9F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0953411226A9A81A00CDB9F6 /* Project_7.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Project_7.entitlements; sourceTree = "<group>"; };
-		0953411926A9ABAD00CDB9F6 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
-		0953411A26A9ABAD00CDB9F6 /* Photo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Photo.xib; sourceTree = "<group>"; };
+		0953411926A9ABAD00CDB9F6 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		0953411A26A9ABAD00CDB9F6 /* PhotoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,8 +63,8 @@
 				0953410E26A9A81A00CDB9F6 /* Main.storyboard */,
 				0953411126A9A81A00CDB9F6 /* Info.plist */,
 				0953411226A9A81A00CDB9F6 /* Project_7.entitlements */,
-				0953411926A9ABAD00CDB9F6 /* Photo.swift */,
-				0953411A26A9ABAD00CDB9F6 /* Photo.xib */,
+				0953411926A9ABAD00CDB9F6 /* PhotoCell.swift */,
+				0953411A26A9ABAD00CDB9F6 /* PhotoCell.xib */,
 			);
 			path = Project_7;
 			sourceTree = "<group>";
@@ -126,7 +126,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0953411C26A9ABAD00CDB9F6 /* Photo.xib in Resources */,
+				0953411C26A9ABAD00CDB9F6 /* PhotoCell.xib in Resources */,
 				0953410D26A9A81A00CDB9F6 /* Assets.xcassets in Resources */,
 				0953411026A9A81A00CDB9F6 /* Main.storyboard in Resources */,
 			);
@@ -139,7 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0953411B26A9ABAD00CDB9F6 /* Photo.swift in Sources */,
+				0953411B26A9ABAD00CDB9F6 /* PhotoCell.swift in Sources */,
 				0953410B26A9A81900CDB9F6 /* ViewController.swift in Sources */,
 				0953410926A9A81900CDB9F6 /* AppDelegate.swift in Sources */,
 			);
