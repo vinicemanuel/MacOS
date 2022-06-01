@@ -13,6 +13,8 @@
 		0953411026A9A81A00CDB9F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0953410E26A9A81A00CDB9F6 /* Main.storyboard */; };
 		0953411B26A9ABAD00CDB9F6 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0953411926A9ABAD00CDB9F6 /* PhotoCell.swift */; };
 		0953411C26A9ABAD00CDB9F6 /* PhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0953411A26A9ABAD00CDB9F6 /* PhotoCell.xib */; };
+		0993ED522847D5BB00BD8641 /* Extension_Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0993ED512847D5BB00BD8641 /* Extension_Array.swift */; };
+		0993ED542847E4AC00BD8641 /* black.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0993ED532847E40900BD8641 /* black.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		0953411226A9A81A00CDB9F6 /* Project_7.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Project_7.entitlements; sourceTree = "<group>"; };
 		0953411926A9ABAD00CDB9F6 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		0953411A26A9ABAD00CDB9F6 /* PhotoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoCell.xib; sourceTree = "<group>"; };
+		0993ED512847D5BB00BD8641 /* Extension_Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_Array.swift; sourceTree = "<group>"; };
+		0993ED532847E40900BD8641 /* black.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = black.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +69,8 @@
 				0953411226A9A81A00CDB9F6 /* Project_7.entitlements */,
 				0953411926A9ABAD00CDB9F6 /* PhotoCell.swift */,
 				0953411A26A9ABAD00CDB9F6 /* PhotoCell.xib */,
+				0993ED512847D5BB00BD8641 /* Extension_Array.swift */,
+				0993ED532847E40900BD8641 /* black.mp4 */,
 			);
 			path = Project_7;
 			sourceTree = "<group>";
@@ -128,6 +134,7 @@
 			files = (
 				0953411C26A9ABAD00CDB9F6 /* PhotoCell.xib in Resources */,
 				0953410D26A9A81A00CDB9F6 /* Assets.xcassets in Resources */,
+				0993ED542847E4AC00BD8641 /* black.mp4 in Resources */,
 				0953411026A9A81A00CDB9F6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +149,7 @@
 				0953411B26A9ABAD00CDB9F6 /* PhotoCell.swift in Sources */,
 				0953410B26A9A81900CDB9F6 /* ViewController.swift in Sources */,
 				0953410926A9A81900CDB9F6 /* AppDelegate.swift in Sources */,
+				0993ED522847D5BB00BD8641 /* Extension_Array.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

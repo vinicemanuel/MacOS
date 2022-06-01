@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import AVFoundation
 
 class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionViewDataSource {
 
@@ -63,6 +64,22 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
             }
             
             self.collectionView.animator().deleteItems(at: self.collectionView.selectionIndexPaths)
+        }
+    }
+    
+    @IBAction func runExport(_ sender: NSMenuItem) {
+        let size: CGSize
+
+        if sender.tag == 720 {
+            size = CGSize(width: 1280, height: 720)
+        } else {
+            size = CGSize(width: 1920, height: 1080)
+        }
+
+        do {
+            try exportMovie(at: size)
+        } catch {
+            print("Error")
         }
     }
     
@@ -125,6 +142,112 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
 
     }
     
+    private func exportMovie(at size: NSSize) throws {
+        let videoDuration = 8.0
+        let timeRange = CMTimeRange(start: .zero, duration: CMTime(seconds: videoDuration, preferredTimescale: 600))
+
+        let savePath = photosDirectory.appendingPathComponent("video.mp4")
+        let fm = FileManager.default
+
+        if fm.fileExists(atPath: savePath.path) {
+            try fm.removeItem(at: savePath)
+        }
+
+        let mutableComposition = AVMutableComposition()
+        let videoComposition = AVMutableVideoComposition()
+        videoComposition.renderSize = size
+        videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
+
+        let parentLayer = CALayer()
+        parentLayer.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+
+        parentLayer.addSublayer(createVideoLayer(in: parentLayer, composition: mutableComposition, videoComposition: videoComposition, timeRange: timeRange))
+        parentLayer.addSublayer(createSlideshow(frame: parentLayer.frame, duration: videoDuration))
+        parentLayer.addSublayer(createText(frame: parentLayer.frame))
+
+        let instruction = AVMutableVideoCompositionInstruction()
+        instruction.timeRange = timeRange
+        videoComposition.instructions = [instruction]
+
+        let exportSession = AVAssetExportSession(asset: mutableComposition, presetName: AVAssetExportPresetHighestQuality)!
+        exportSession.outputURL = savePath
+        exportSession.videoComposition = videoComposition
+        exportSession.outputFileType = .mp4
+
+        exportSession.exportAsynchronously { [unowned self] in
+            DispatchQueue.main.async {
+                self.exportFinished(error: exportSession.error)
+            }
+        }
+    }
+    
+    private func createVideoLayer(in parentLayer: CALayer, composition: AVMutableComposition, videoComposition: AVMutableVideoComposition, timeRange: CMTimeRange) -> CALayer {
+        let videoLayer = CALayer()
+        videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, in: parentLayer)
+
+        let mutableCompositionVideoTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid)
+        let trackURL = Bundle.main.url(forResource: "black", withExtension:"mp4")!
+        let asset = AVAsset(url: trackURL)
+        let track = asset.tracks[0]
+        try! mutableCompositionVideoTrack?.insertTimeRange(timeRange, of: track, at: .zero)
+
+        return videoLayer
+    }
+    
+    private func createSlideshow(frame: CGRect, duration: CFTimeInterval) -> CALayer {
+        let imageLayer = CALayer()
+        imageLayer.bounds = frame
+        imageLayer.position = CGPoint(x: imageLayer.bounds.midX, y: imageLayer.bounds.midY)
+        imageLayer.contentsGravity = .resizeAspectFill
+
+        let fadeAnim = CAKeyframeAnimation(keyPath: "contents")
+        fadeAnim.duration = duration
+        fadeAnim.isRemovedOnCompletion = false
+        fadeAnim.beginTime = AVCoreAnimationBeginTimeAtZero
+
+        var values = [NSImage]()
+
+        for photo in self.photos {
+            if let image = NSImage(contentsOfFile: photo.path) {
+                values.append(image)
+            }
+        }
+
+        fadeAnim.values = values
+        imageLayer.add(fadeAnim, forKey: nil)
+
+        return imageLayer
+    }
+    
+    private func createText(frame: CGRect) -> CALayer {
+        let attrs = [NSAttributedString.Key.font: NSFont.boldSystemFont(ofSize: 24), NSAttributedString.Key.foregroundColor: NSColor.green]
+        let text = NSAttributedString(string: "Copyright © 2017 Hacking with Swift", attributes: attrs)
+        let textSize = text.size()
+
+        let textLayer = CATextLayer()
+        textLayer.bounds = CGRect(origin: CGPoint.zero, size: textSize)
+        textLayer.anchorPoint = CGPoint(x: 1, y: 1)
+        textLayer.position = CGPoint(x: frame.maxX - 10, y: textSize.height + 10)
+        textLayer.string = text
+        textLayer.display() // force the layer to render immediately!
+
+        return textLayer
+    }
+    
+    private func exportFinished(error: Error?) {
+        let message: String
+
+        if let error = error  {
+            message = "Error: \(error.localizedDescription)"
+        } else {
+            message = "Success!"
+        }
+
+        let alert = NSAlert()
+        alert.messageText = message
+        alert.runModal()
+    }
+    
     //MARK: - NSCollectionViewDelegate
     func collectionView(_ collectionView: NSCollectionView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forItemsAt indexPaths: Set<IndexPath>) {
         self.itemsBeingDragged = indexPaths
@@ -172,18 +295,3 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
         return pictureItem
     }
 }
-
-extension Array {
-    
-    mutating func moveItem(from: Int, to: Int) {
-        let item = self[from]
-        self.remove(at: from)
-        
-        if to <= from {
-            self.insert(item, at: to)
-        } else {
-            self.insert(item, at: to - 1)
-        }
-    }
-}
-
