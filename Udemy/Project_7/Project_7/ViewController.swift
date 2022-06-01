@@ -45,6 +45,27 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
         }
     }
     
+    override func keyUp(with event: NSEvent) {
+        //check delete button
+        if event.charactersIgnoringModifiers != String(UnicodeScalar(NSDeleteCharacter)!) { return }
+        
+        let selectionIndexPath = self.collectionView.selectionIndexPaths.sorted().reversed()
+        if selectionIndexPath.count > 0 {
+            let fm = FileManager.default
+            
+            for indexPath in selectionIndexPath {
+                do {
+                    try fm.trashItem(at: self.photos[indexPath.item], resultingItemURL: nil)
+                    self.photos.remove(at: indexPath.item)
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+            
+            self.collectionView.animator().deleteItems(at: self.collectionView.selectionIndexPaths)
+        }
+    }
+    
     private func loadPhotos() -> [URL] {
         do {
             let fm = FileManager.default
@@ -58,7 +79,7 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
         }
     }
     
-    func performInternalDrag(with items: [IndexPath], to indexPath: IndexPath) {
+    private func performInternalDrag(with items: [IndexPath], to indexPath: IndexPath) {
         var targetIndex = indexPath.item
         
         for fromIndexPath in items {
@@ -84,7 +105,7 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
         }
     }
 
-    func performExternalDrag(with items: [NSPasteboardItem], at indexPath: IndexPath) {
+    private func performExternalDrag(with items: [NSPasteboardItem], at indexPath: IndexPath) {
         let fm = FileManager.default
         
         for item in items {
