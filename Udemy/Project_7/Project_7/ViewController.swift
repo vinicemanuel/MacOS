@@ -59,7 +59,29 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
     }
     
     func performInternalDrag(with items: [IndexPath], to indexPath: IndexPath) {
+        var targetIndex = indexPath.item
         
+        for fromIndexPath in items {
+            let fromItemIndex = fromIndexPath.item
+            //move towards front
+            if (fromItemIndex > targetIndex) {
+                self.photos.moveItem(from: fromItemIndex, to: targetIndex)
+                self.collectionView.moveItem(at: IndexPath(item: fromItemIndex, section: 0), to: IndexPath(item: targetIndex, section: 0))
+                targetIndex += 1
+            }
+        }
+        
+        targetIndex = indexPath.item - 1
+        
+        for fromIndexPath in items.reversed() {
+            let fromItemIndex = fromIndexPath.item
+            //move towards back
+            if (fromItemIndex < targetIndex) {
+                self.photos.moveItem(from: fromItemIndex, to: targetIndex)
+                collectionView.moveItem(at: IndexPath(item: fromItemIndex, section: 0), to: IndexPath(item: targetIndex, section: 0))
+                targetIndex -= 1
+            }
+        }
     }
 
     func performExternalDrag(with items: [NSPasteboardItem], at indexPath: IndexPath) {
@@ -109,6 +131,10 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
         return .move
     }
     
+    func collectionView(_ collectionView: NSCollectionView, pasteboardWriterForItemAt indexPath: IndexPath) -> NSPasteboardWriting? {
+        return photos[indexPath.item] as NSPasteboardWriting?
+    }
+    
     //MARK: - NSCollectionViewDataSource
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.photos.count
@@ -123,6 +149,20 @@ class ViewController: NSViewController, NSCollectionViewDelegate, NSCollectionVi
         pictureItem.imageView?.image = NSImage(contentsOf: self.photos[indexPath.item])
         
         return pictureItem
+    }
+}
+
+extension Array {
+    
+    mutating func moveItem(from: Int, to: Int) {
+        let item = self[from]
+        self.remove(at: from)
+        
+        if to <= from {
+            self.insert(item, at: to)
+        } else {
+            self.insert(item, at: to - 1)
+        }
     }
 }
 
