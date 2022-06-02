@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import GameplayKit
 
 class ViewController: NSViewController {
     
@@ -16,11 +17,16 @@ class ViewController: NSViewController {
     var gridViewButtons = [NSButton]()
     var buttonsArray = [[NSButton]]()
     
+    var images = ["elephant", "giraffe", "hippo", "monkey", "panda", "parrot", "penguin", "pig", "rabbit", "snake"]
+    var currentLevel = 1
+    
     let gridSize = 10
     let gridMargin: CGFloat = 5
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.createLevel()
     }
     
     override func loadView() {
@@ -113,24 +119,71 @@ class ViewController: NSViewController {
         return gridView
     }
     
+    private func generateLayout(items: Int) {
+        for button in self.gridViewButtons {
+            button.tag = 0
+            button.image = nil
+        }
+
+        self.gridViewButtons.shuffle()
+        self.images.shuffle()
+
+        var numUsed = 0
+        var itemCount = 1
+
+        let firstButton = self.gridViewButtons[0]
+        firstButton.tag = 2 // correct answer
+        firstButton.image = NSImage(named: self.images[0])
+
+        for i in 1 ..< items {
+            let currentButton = gridViewButtons[i]
+            currentButton.tag = 1 // wrong answer
+            currentButton.image = NSImage(named: self.images[itemCount])
+            numUsed += 1
+
+            if (numUsed == 2) {
+                numUsed = 0
+                itemCount += 1
+            }
+
+            if (itemCount == self.images.count) {
+                itemCount = 1
+            }
+        }
+    }
+    
+    private func gameOver() {
+        
+    }
+    
+    private func createLevel() {
+        if currentLevel == 9 {
+            gameOver()
+        } else {
+//            let numbersOfItems = [0, 5, 15, 25, 35, 49, 65, 81, 100]
+            let numbersOfItems = [0, 5, 5, 5, 5, 5, 5, 5, 5]
+            generateLayout(items: numbersOfItems[currentLevel])
+        }
+    }
+    
     @objc func imageClicked(_ sender: NSButton) {
-//        // ignore invisible buttons
-//        guard sender.tag != 0 else { return }
-//
-//        if sender.tag == 1 {
-//            // wrong
-//            if currentLevel > 1 {
-//                currentLevel -= 1
-//            }
-//
-//            createLevel()
-//        } else {
-//            // correct
-//            if currentLevel < 9 {
-//                currentLevel += 1
-//                createLevel()
-//            }
-//        }
+        // ignore invisible buttons
+        guard sender.tag != 0 else { return }
+
+        if sender.tag == 1 {
+            // wrong
+            if currentLevel > 1 {
+                currentLevel -= 1
+            }
+
+            createLevel()
+        } else {
+            // correct
+            if currentLevel < 9 {
+                currentLevel += 1
+                createLevel()
+            }
+        }
     }
 
 }
