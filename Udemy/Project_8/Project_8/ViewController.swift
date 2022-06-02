@@ -6,7 +6,6 @@
 //
 
 import Cocoa
-import GameplayKit
 
 class ViewController: NSViewController {
     
@@ -16,6 +15,8 @@ class ViewController: NSViewController {
     
     var gridViewButtons = [NSButton]()
     var buttonsArray = [[NSButton]]()
+    
+    var gameOverView: GameOverView!
     
     var images = ["elephant", "giraffe", "hippo", "monkey", "panda", "parrot", "penguin", "pig", "rabbit", "snake"]
     var currentLevel = 1
@@ -153,12 +154,26 @@ class ViewController: NSViewController {
     }
     
     private func gameOver() {
+        self.gameOverView = GameOverView()
+        self.gameOverView.alphaValue = 0
+        self.gameOverView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(gameOverView)
         
+        self.gameOverView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        self.gameOverView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        self.gameOverView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        self.gameOverView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        self.gameOverView.layoutSubtreeIfNeeded()
+        
+        gameOverView.startEmitting()
+
+        NSAnimationContext.current.duration = 1
+        gameOverView.animator().alphaValue = 1
     }
     
     private func createLevel() {
         if currentLevel == 9 {
-            gameOver()
+            self.gameOver()
         } else {
 //            let numbersOfItems = [0, 5, 15, 25, 35, 49, 65, 81, 100]
             let numbersOfItems = [0, 5, 5, 5, 5, 5, 5, 5, 5]
