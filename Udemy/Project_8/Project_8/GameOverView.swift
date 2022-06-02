@@ -72,4 +72,8 @@ class GameOverView: NSView {
 
         return cell
     }
+    
+    override func mouseDown(with event: NSEvent) {
+        // don't let mouse clicks bleed through
+    }
 }
