@@ -744,14 +744,21 @@
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SZx-vp-26h">
                                 <rect key="frame" x="95" y="104" width="488" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="y1g-TH-eUT" id="exk-jX-8v2">
+                                <popUpButtonCell key="cell" type="push" title="Automatically cycle through all readouts" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="-1" imageScaling="proportionallyDown" inset="2" selectedItem="y1g-TH-eUT" id="exk-jX-8v2">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="xUt-9F-E19">
                                         <items>
-                                            <menuItem title="Item 1" state="on" id="y1g-TH-eUT"/>
-                                            <menuItem title="Item 2" id="7fy-gS-LLF"/>
-                                            <menuItem title="Item 3" id="nuP-K6-cve"/>
+                                            <menuItem title="Automatically cycle through all readouts" state="on" tag="-1" id="y1g-TH-eUT"/>
+                                            <menuItem isSeparatorItem="YES" id="y3V-Zn-rkA"/>
+                                            <menuItem title="Show summary text" id="7fy-gS-LLF"/>
+                                            <menuItem title="Show current temperature" tag="1" id="RCY-ly-JzJ">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="Show chance of rain" tag="2" id="cd8-tZ-kd9">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="Show cloud cover" tag="3" id="nuP-K6-cve"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
