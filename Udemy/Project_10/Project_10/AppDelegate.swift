@@ -34,7 +34,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func showSettings(_ sender: NSMenuItem) {
-        print("hello")
+        let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
+        guard let vc = storyboard.instantiateController(withIdentifier: "ViewController") as? ViewController else { return }
+        
+        let popoverView = NSPopover()
+        popoverView.contentViewController = vc
+        popoverView.behavior = .transient
+        popoverView.show(relativeTo: self.statusItem.button!.bounds, of: self.statusItem.button!, preferredEdge: .maxY)
     }
 }
 

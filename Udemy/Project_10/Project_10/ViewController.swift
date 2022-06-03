@@ -6,9 +6,15 @@
 //
 
 import Cocoa
+import MapKit
 
 class ViewController: NSViewController {
-
+    
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var apiKey: NSTextField!
+    @IBOutlet weak var statusBarOption: NSPopUpButton!
+    @IBOutlet weak var units: NSSegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,6 +25,10 @@ class ViewController: NSViewController {
         didSet {
         // Update the view, if already loaded.
         }
+    }
+    
+    @IBAction func showPoweredByDarkSky(_ sender: Any) {
+        
     }
 }
 
