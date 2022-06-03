@@ -15,6 +15,8 @@ class GameScene: SKScene {
     var currentBubbleTexture = 0
     var maximumNumber = 1
     
+    var bubbleTimer: Timer!
+    
     override func didMove(to view: SKView) {
         self.bubbleTextures.append(SKTexture(imageNamed: "bubbleBlue"))
         self.bubbleTextures.append(SKTexture(imageNamed: "bubbleCyan"))
@@ -31,9 +33,11 @@ class GameScene: SKScene {
         for _ in 1 ... 8 {
             createBubble()
         }
+        
+        bubbleTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(createBubble), userInfo: nil, repeats: true)
     }
     
-    func createBubble() {
+    @objc func createBubble() {
         let bubble = SKSpriteNode(texture: bubbleTextures[currentBubbleTexture])
         bubble.name = String(maximumNumber)
         bubble.zPosition = 1
@@ -53,11 +57,11 @@ class GameScene: SKScene {
         let yPos = Int.random(in: 0..<600)
         bubble.position = CGPoint(x: xPos, y: yPos)
 
-//        let scale = CGFloat.random(in: 0...1)
-//        bubble.setScale(max(0.7, scale))
-//
-//        bubble.alpha = 0
-//        bubble.run(SKAction.fadeIn(withDuration: 0.5))
+        let scale = CGFloat.random(in: 0...1)
+        bubble.setScale(max(0.7, scale))
+
+        bubble.alpha = 0
+        bubble.run(SKAction.fadeIn(withDuration: 0.5))
 
         configurePhysics(for: bubble)
         nextBubble()
@@ -93,6 +97,48 @@ class GameScene: SKScene {
 
         if strMaximumNumber.last! == "9" {
             maximumNumber += 1
+        }
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        let location = event.location(in: self)
+        let clickedNodes = nodes(at: location).filter { $0.name != nil }
+
+        guard clickedNodes.count != 0 else { return }
+
+        let lowestBubble = bubbles.min { Int($0.name!)! < Int($1.name!)! }
+        guard let bestNumber = lowestBubble?.name else { return }
+
+        for node in clickedNodes {
+            if node.name == bestNumber {
+                pop(node as! SKSpriteNode)
+                return
+            }
+        }
+
+        //wrong Bubble clicked
+        createBubble()
+        createBubble()
+    }
+    
+    func pop(_ node: SKSpriteNode) {
+        guard let index = bubbles.firstIndex(of: node) else { return }
+        bubbles.remove(at: index)
+
+        node.physicsBody = nil
+        node.name = nil
+
+        let fadeOut = SKAction.fadeOut(withDuration: 0.3)
+        let scaleUp = SKAction.scale(by: 1.5, duration: 0.3)
+        let group = SKAction.group([fadeOut, scaleUp])
+
+        let sequence = SKAction.sequence([group, SKAction.removeFromParent()])
+        node.run(sequence)
+
+        run(SKAction.playSoundFileNamed("pop.wav", waitForCompletion: false))
+
+        if bubbles.count == 0 && bubbleTimer != nil {
+            bubbleTimer.invalidate()
         }
     }
 }
