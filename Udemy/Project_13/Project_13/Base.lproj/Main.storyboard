@@ -782,20 +782,44 @@
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="Koa-u6-3Vr">
                                                 <items>
-                                                    <menuItem title="Tiny" state="on" id="3ty-T3-6z9" userLabel="Tiny"/>
-                                                    <menuItem title="Extra small" id="OVS-3h-nKZ" userLabel="Extra small"/>
-                                                    <menuItem title="Smaller" id="hxP-3S-NDc" userLabel="Smaller"/>
-                                                    <menuItem title="Default" id="nhI-c1-Oym" userLabel="Default">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="Tiny" state="on" id="3ty-T3-6z9" userLabel="Tiny">
+                                                        <connections>
+                                                            <action selector="changeFontSize:" target="XfG-lQ-9wD" id="rII-6a-l7G"/>
+                                                        </connections>
                                                     </menuItem>
-                                                    <menuItem title="Larger" id="JC4-kM-SSb" userLabel="Larger">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="Extra small" tag="1" id="OVS-3h-nKZ" userLabel="Extra small">
+                                                        <connections>
+                                                            <action selector="changeFontSize:" target="XfG-lQ-9wD" id="fQh-bb-WeA"/>
+                                                        </connections>
                                                     </menuItem>
-                                                    <menuItem title="Extra Large" id="FMV-Q7-HSQ" userLabel="Extra Large">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="Smaller" tag="2" id="hxP-3S-NDc" userLabel="Smaller">
+                                                        <connections>
+                                                            <action selector="changeFontSize:" target="XfG-lQ-9wD" id="54l-t0-eQc"/>
+                                                        </connections>
                                                     </menuItem>
-                                                    <menuItem title="Massive" id="w7G-ZK-J9z" userLabel="Massive">
+                                                    <menuItem title="Default" tag="3" id="nhI-c1-Oym" userLabel="Default">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="changeFontSize:" target="XfG-lQ-9wD" id="BQp-Y7-zqb"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Larger" tag="4" id="JC4-kM-SSb" userLabel="Larger">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="changeFontSize:" target="XfG-lQ-9wD" id="fwf-zd-oTQ"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Extra Large" tag="5" id="FMV-Q7-HSQ" userLabel="Extra Large">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="changeFontSize:" target="XfG-lQ-9wD" id="Cdb-kL-DDP"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Massive" tag="6" id="w7G-ZK-J9z" userLabel="Massive">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="changeFontSize:" target="XfG-lQ-9wD" id="ari-UY-vjd"/>
+                                                        </connections>
                                                     </menuItem>
                                                 </items>
                                             </menu>
@@ -805,6 +829,9 @@
                                         <rect key="frame" x="120" y="304" width="110" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="changeFontColor:" target="XfG-lQ-9wD" id="TTb-M4-b1y"/>
+                                        </connections>
                                     </colorWell>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AFK-kk-40U">
                                         <rect key="frame" x="0.0" y="258" width="124" height="17"/>
@@ -823,7 +850,11 @@
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="24x-p2-ovR">
                                                 <items>
-                                                    <menuItem title="No background image" state="on" tag="999" id="XT3-cj-XJd"/>
+                                                    <menuItem title="No background image" state="on" tag="999" id="XT3-cj-XJd">
+                                                        <connections>
+                                                            <action selector="changeBackGroundImage:" target="XfG-lQ-9wD" id="9Ld-uQ-dxn"/>
+                                                        </connections>
+                                                    </menuItem>
                                                     <menuItem isSeparatorItem="YES" id="VA2-gH-5Ea"/>
                                                 </items>
                                             </menu>
@@ -851,11 +882,17 @@
                                         <rect key="frame" x="0.0" y="131" width="110" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="changeBackGroundColorStart:" target="XfG-lQ-9wD" id="iQ9-Ro-Gl4"/>
+                                        </connections>
                                     </colorWell>
                                     <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uOk-o1-mzY">
                                         <rect key="frame" x="120" y="131" width="110" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="changeBackgroundColorEnd:" target="XfG-lQ-9wD" id="0Dn-Y5-8TF"/>
+                                        </connections>
                                     </colorWell>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AdO-X3-iu4">
                                         <rect key="frame" x="0.0" y="84" width="230" height="17"/>
@@ -877,6 +914,9 @@
                                                 <segment label="Strong" width="74"/>
                                             </segments>
                                         </segmentedCell>
+                                        <connections>
+                                            <action selector="changeDropShadowStrength:" target="XfG-lQ-9wD" id="j7q-E7-DYN"/>
+                                        </connections>
                                     </segmentedControl>
                                     <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Te-Wv-eFr">
                                         <rect key="frame" x="0.0" y="25" width="234" height="24"/>
@@ -889,6 +929,9 @@
                                                 <segment label="Both" width="74"/>
                                             </segments>
                                         </segmentedCell>
+                                        <connections>
+                                            <action selector="changeDropShadowTarget:" target="XfG-lQ-9wD" id="rKP-Hn-L46"/>
+                                        </connections>
                                     </segmentedControl>
                                 </subviews>
                                 <constraints>
@@ -907,6 +950,18 @@
                             <constraint firstItem="0Tg-Su-3mU" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="rlc-7I-SMC"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backgroundColorEnd" destination="uOk-o1-mzY" id="EbV-QK-JAu"/>
+                        <outlet property="backgroundColorStart" destination="gAU-I9-TTc" id="iJN-cq-6HZ"/>
+                        <outlet property="backgroundImage" destination="l9I-BP-gcd" id="XSJ-35-tb7"/>
+                        <outlet property="caption" destination="BNq-3a-KAs" id="jqf-X6-YNi"/>
+                        <outlet property="dropShadowStrength" destination="Ayw-bW-ZLF" id="Seb-73-H7t"/>
+                        <outlet property="dropShadowTarget" destination="2Te-Wv-eFr" id="TRP-Hu-aWM"/>
+                        <outlet property="fontName" destination="qjC-PJ-9YS" id="gAE-ok-lVL"/>
+                        <outlet property="fontSize" destination="77A-oO-wU0" id="1IL-5G-8Fc"/>
+                        <outlet property="fountColor" destination="3RE-JL-CsX" id="sXc-C2-GQ5"/>
+                        <outlet property="imageView" destination="4dQ-FM-B4r" id="XBb-xY-D7S"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
