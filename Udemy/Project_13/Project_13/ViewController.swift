@@ -107,6 +107,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
             self.clearBackground(context: ctx, rect: rect)
             self.drawBackgroundImage(rect: rect)
             self.drawColorOverlay(rect: rect)
+            let captionOffset = self.drawCaption(rect: rect)
             
             return true
         }
@@ -132,5 +133,63 @@ class ViewController: NSViewController, NSTextViewDelegate {
         let gradient = NSGradient(starting: backgroundColorStart.color, ending: backgroundColorEnd.color)
         gradient?.draw(in: rect, angle: -90)
     }
+    
+    func drawCaption(rect: CGRect) -> CGFloat {
+        if dropShadowStrength.selectedSegment != 0 {
+            if dropShadowTarget.selectedSegment == 0 || dropShadowTarget.selectedSegment == 2 {
+                setShadow()
+            }
+        }
 
+        let string = caption.textStorage?.string ?? ""
+        let insetRect = rect.insetBy(dx: 40, dy: 20)
+
+        let captionAttributes = createCaptionAttributes()
+        let attributedString = NSAttributedString(string: string, attributes: captionAttributes)
+        attributedString.draw(in: insetRect)
+
+        //draw again if the shadow is sttrong to make the shadow deeper (work around)
+        if dropShadowStrength.selectedSegment == 2 {
+            if dropShadowTarget.selectedSegment == 0 || dropShadowTarget.selectedSegment == 2 {
+                // create a stronger drop shadow by drawing again
+                attributedString.draw(in: insetRect)
+            }
+        }
+
+        // clear the shadow so it doesn't affect other stuff
+        let noShadow = NSShadow()
+        noShadow.set()
+
+        let availableSpace = CGSize(width: insetRect.width, height: CGFloat.greatestFiniteMagnitude)
+        let textFrame = attributedString.boundingRect(with: availableSpace, options: [.usesLineFragmentOrigin, .usesFontLeading])
+        return textFrame.height
+    }
+    
+    func createCaptionAttributes() -> [NSAttributedString.Key: Any]? {
+        let ps = NSMutableParagraphStyle()
+        ps.alignment = .center
+
+        let fontSizes: [Int: CGFloat] = [0: 48, 1: 56, 2: 64, 3: 72, 4: 80, 5: 96, 6: 128]
+        guard let baseFontSize = fontSizes[fontSize.selectedTag()] else { return nil }
+
+        let selectedFontName = fontName.selectedItem?.title.trimmingCharacters(in: .whitespacesAndNewlines) ?? "HelveticaNeue-Medium"
+        guard let font = NSFont(name: selectedFontName, size: baseFontSize) else { return nil }
+        let color = fountColor.color
+
+        return [NSAttributedString.Key.paragraphStyle: ps, NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor: color]
+    }
+    
+    func setShadow() {
+        //enable during all drawing operation
+        let shadow = NSShadow()
+        shadow.shadowOffset = CGSize.zero
+        shadow.shadowColor = NSColor.black
+        shadow.shadowBlurRadius = 50
+        shadow.set()
+    }
+    
+    //MARK: - NSTextViewDelegate
+    func textDidChange(_ notification: Notification) {
+        self.generatePreview()
+    }
 }
