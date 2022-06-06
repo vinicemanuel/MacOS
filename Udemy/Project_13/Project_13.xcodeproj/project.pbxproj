@@ -11,6 +11,7 @@
 		09143150284E205000AC65A3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0914314F284E205000AC65A3 /* ViewController.swift */; };
 		09143152284E205000AC65A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09143151284E205000AC65A3 /* Assets.xcassets */; };
 		09143155284E205000AC65A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09143153284E205000AC65A3 /* Main.storyboard */; };
+		0914315D284E65A800AC65A3 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 0914315C284E65A800AC65A3 /* fonts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		09143151284E205000AC65A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09143154284E205000AC65A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		09143156284E205000AC65A3 /* Project_13.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Project_13.entitlements; sourceTree = "<group>"; };
+		0914315C284E65A800AC65A3 /* fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fonts; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				09143151284E205000AC65A3 /* Assets.xcassets */,
 				09143153284E205000AC65A3 /* Main.storyboard */,
 				09143156284E205000AC65A3 /* Project_13.entitlements */,
+				0914315C284E65A800AC65A3 /* fonts */,
 			);
 			path = Project_13;
 			sourceTree = "<group>";
@@ -119,6 +122,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0914315D284E65A800AC65A3 /* fonts in Resources */,
 				09143152284E205000AC65A3 /* Assets.xcassets in Resources */,
 				09143155284E205000AC65A3 /* Main.storyboard in Resources */,
 			);
