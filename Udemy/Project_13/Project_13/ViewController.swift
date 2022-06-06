@@ -29,46 +29,45 @@ class ViewController: NSViewController, NSTextViewDelegate {
         self.loadBackgroundImages()
     }
 
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        generatePreview()
     }
 
     @IBAction func changeFontSize(_ sender: NSMenuItem) {
-        
+        self.generatePreview()
     }
     
     @IBAction func changeFontColor(_ sender: Any) {
-        
+        self.generatePreview()
     }
     
     @IBAction func changeBackGroundImage(_ sender: NSMenuItem) {
-        
+        self.generatePreview()
     }
     
     @IBAction func changeBackGroundColorStart(_ sender: Any) {
-        
+        self.generatePreview()
     }
     
     @IBAction func changeBackgroundColorEnd(_ sender: Any) {
-        
+        self.generatePreview()
     }
     
     @IBAction func changeDropShadowStrength(_ sender: Any) {
-        
+        self.generatePreview()
     }
     
     @IBAction func changeDropShadowTarget(_ sender: Any) {
-        
+        self.generatePreview()
     }
     
     @objc func changeFontName(_ sender: NSMenuItem) {
-        
+        self.generatePreview()
     }
     
     @IBAction func changeBackgroundImage(_ sender: Any) {
-        
+        self.generatePreview()
     }
     
     func loadFonts() {
@@ -100,4 +99,38 @@ class ViewController: NSViewController, NSTextViewDelegate {
             backgroundImage.menu?.addItem(item)
         }
     }
+    
+    func generatePreview() {
+        let image = NSImage(size: CGSize(width: 1242, height: 2208), flipped: false) { [unowned self] rect in
+            guard let ctx = NSGraphicsContext.current?.cgContext else { return false }
+            
+            self.clearBackground(context: ctx, rect: rect)
+            self.drawBackgroundImage(rect: rect)
+            self.drawColorOverlay(rect: rect)
+            
+            return true
+        }
+
+        imageView.image = image
+    }
+    
+    func clearBackground(context: CGContext, rect: CGRect) {
+        context.setFillColor(NSColor.white.cgColor)
+        context.fill(rect)
+    }
+    
+    func drawBackgroundImage(rect: CGRect) {
+        // if they chose no background image, bail out
+        if backgroundImage.selectedTag() == 999 { return }
+        guard let title = backgroundImage.titleOfSelectedItem else { return }
+        guard let image = NSImage(named: title) else { return }
+
+        image.draw(in: rect, from: .zero, operation: .sourceOver, fraction: 1)
+    }
+    
+    func drawColorOverlay(rect: CGRect) {
+        let gradient = NSGradient(starting: backgroundColorStart.color, ending: backgroundColorEnd.color)
+        gradient?.draw(in: rect, angle: -90)
+    }
+
 }
