@@ -75,6 +75,28 @@ class ViewController: NSViewController, NSTextViewDelegate {
         self.generatePreview()
     }
     
+    @IBAction func export(_ sender: Any) {
+        guard let image = imageView.image else { return }
+        guard let tiffData = image.tiffRepresentation else { return }
+        guard let imageRep = NSBitmapImageRep(data: tiffData) else { return }
+        guard let png = imageRep.representation(using: .png, properties: [:]) else { return }
+
+        let panel = NSSavePanel()
+        panel.allowedFileTypes = ["png"]
+
+        panel.begin { result in
+            if result == .OK {
+                guard let url = panel.url else { return }
+
+                do {
+                    try png.write(to: url)
+                } catch {
+                    print (error.localizedDescription)
+                }
+            }
+        }
+    }
+    
     @objc func importScreenshot() {
         let panel = NSOpenPanel()
         panel.allowedFileTypes = ["jpg", "png"]
