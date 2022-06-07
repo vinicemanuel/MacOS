@@ -26,6 +26,7 @@
 		0914315C284E65A800AC65A3 /* fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fonts; sourceTree = "<group>"; };
 		0914315E284F77A200AC65A3 /* Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshot.swift; sourceTree = "<group>"; };
 		09143160284F78A500AC65A3 /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		09143164284F80D600AC65A3 /* Project-13-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Project-13-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 		0914314C284E205000AC65A3 /* Project_13 */ = {
 			isa = PBXGroup;
 			children = (
+				09143164284F80D600AC65A3 /* Project-13-Info.plist */,
 				0914314D284E205000AC65A3 /* AppDelegate.swift */,
 				0914314F284E205000AC65A3 /* ViewController.swift */,
 				09143151284E205000AC65A3 /* Assets.xcassets */,
@@ -287,6 +289,7 @@
 				DEVELOPMENT_TEAM = J273RJ8N9K;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Project-13-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -314,6 +317,7 @@
 				DEVELOPMENT_TEAM = J273RJ8N9K;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Project-13-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;

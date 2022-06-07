@@ -22,10 +22,19 @@ class ViewController: NSViewController, NSTextViewDelegate {
     
     var screenshotImage: NSImage?
     
+//    var document: Document {
+//        let oughtToBeDocument = view.window?.windowController?.document as? Document
+//        assert(oughtToBeDocument != nil, "Unable to find the document for this view controller.")
+//        return oughtToBeDocument!
+//    }
+   
+    /*
+    this project was created as an Lication and not a Document Lication
+    because of this I can't use the document corect implementation above
+    so I'm using just the wrong 'Document' below
+    */
     var document: Document {
-        let oughtToBeDocument = view.window?.windowController?.document as? Document
-        assert(oughtToBeDocument != nil, "Unable to find the document for this view controller.")
-        return oughtToBeDocument!
+        return Document()
     }
     
     override func viewDidLoad() {
