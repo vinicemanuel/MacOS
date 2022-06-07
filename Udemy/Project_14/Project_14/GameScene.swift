@@ -13,9 +13,31 @@ class GameScene: SKScene {
     var bulletsSprite: SKSpriteNode!
     var scoreLabel: SKLabelNode!
     
+    var bulletTextures = [
+        SKTexture(imageNamed: "shots0"),
+        SKTexture(imageNamed: "shots1"),
+        SKTexture(imageNamed: "shots2"),
+        SKTexture(imageNamed: "shots3"),
+    ]
+    
     var targetSpeed = 4.0
     var targetDelay = 0.8
     var targetsCreated = 0
+    
+    var isGameOver = false
+    
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    
+    var bulletsInClip = 3 {
+        didSet {
+            bulletsSprite.texture = bulletTextures[bulletsInClip]
+        }
+    }
+
     
     override func didMove(to view: SKView) {
         self.createBackground()
@@ -127,12 +149,71 @@ class GameScene: SKScene {
         targetDelay *= 0.99
         targetsCreated += 1
 
-        if targetsCreated < 100 {
+        if targetsCreated < 5 {
             DispatchQueue.main.asyncAfter(deadline: .now() + targetDelay) { [unowned self] in
                 self.createTarget()
             }
         } else {
-
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [unowned self] in
+                self.gameOver()
+            }
         }
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        if isGameOver {
+            if let newGame = SKScene(fileNamed: "GameScene") {
+                let transition = SKTransition.doorway(withDuration: 1)
+                view?.presentScene(newGame, transition: transition)
+            }
+        } else {
+            if bulletsInClip > 0 {
+                run(SKAction.playSoundFileNamed("shot.wav", waitForCompletion: false))
+                bulletsInClip -= 1
+
+                let location = event.location(in: self)
+                shot(at: location)
+            } else {
+                run(SKAction.playSoundFileNamed("empty.wav", waitForCompletion: false))
+            }
+        }
+    }
+    
+    func shot(at location: CGPoint) {
+        let hitNodes = nodes(at: location).filter { $0.name == "target" }
+
+        guard let hitNode = hitNodes.first else { return }
+        guard let parentNode = hitNode.parent as? Target else { return }
+
+        parentNode.hit()
+
+        score += 3
+    }
+    
+    override func keyDown(with event: NSEvent) {
+        guard isGameOver == false else { return }
+
+        if event.charactersIgnoringModifiers == " " {
+            run(SKAction.playSoundFileNamed("reload.wav", waitForCompletion: false))
+            bulletsInClip = 3
+            score -= 1
+        }
+    }
+    
+    func gameOver() {
+        isGameOver = true
+
+        let gameOverTitle = SKSpriteNode(imageNamed: "game-over")
+        gameOverTitle.alpha = 0
+        gameOverTitle.setScale(2)
+        gameOverTitle.position = CGPoint(x: 400, y: 300)
+
+        let fadeIn = SKAction.fadeIn(withDuration: 0.3)
+        let scaleDown = SKAction.scale(to: 1, duration: 0.3)
+        let group = SKAction.group([fadeIn, scaleDown])
+
+        gameOverTitle.run(group)
+        gameOverTitle.zPosition = 900
+        addChild(gameOverTitle)
     }
 }
