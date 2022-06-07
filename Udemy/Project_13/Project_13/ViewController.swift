@@ -13,7 +13,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
     @IBOutlet var caption: NSTextView!
     @IBOutlet weak var fontName: NSPopUpButton!
     @IBOutlet weak var fontSize: NSPopUpButton!
-    @IBOutlet weak var fountColor: NSColorWell!
+    @IBOutlet weak var fontColor: NSColorWell!
     @IBOutlet weak var backgroundImage: NSPopUpButton!
     @IBOutlet weak var backgroundColorStart: NSColorWell!
     @IBOutlet weak var backgroundColorEnd: NSColorWell!
@@ -21,6 +21,12 @@ class ViewController: NSViewController, NSTextViewDelegate {
     @IBOutlet weak var dropShadowTarget: NSSegmentedControl!
     
     var screenshotImage: NSImage?
+    
+    var document: Document {
+        let oughtToBeDocument = view.window?.windowController?.document as? Document
+        assert(oughtToBeDocument != nil, "Unable to find the document for this view controller.")
+        return oughtToBeDocument!
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,38 +42,52 @@ class ViewController: NSViewController, NSTextViewDelegate {
 
     override func viewWillAppear() {
         super.viewWillAppear()
+        
+        updateUI()
         generatePreview()
     }
 
     @IBAction func changeFontSize(_ sender: NSMenuItem) {
+        document.screenshot.captionFontSize = fontSize.selectedTag()
         self.generatePreview()
     }
     
     @IBAction func changeFontColor(_ sender: Any) {
+        document.screenshot.captionColor = fontColor.color
         self.generatePreview()
     }
     
     @IBAction func changeBackGroundImage(_ sender: NSMenuItem) {
+        if backgroundImage.selectedTag() == 999 {
+            document.screenshot.backgroundImage = ""
+        } else {
+            document.screenshot.backgroundImage = backgroundImage.titleOfSelectedItem ?? ""
+        }
         self.generatePreview()
     }
     
     @IBAction func changeBackGroundColorStart(_ sender: Any) {
+        document.screenshot.backgroundColorStart = backgroundColorStart.color
         self.generatePreview()
     }
     
     @IBAction func changeBackgroundColorEnd(_ sender: Any) {
+        document.screenshot.backgroundColorEnd = backgroundColorEnd.color
         self.generatePreview()
     }
     
     @IBAction func changeDropShadowStrength(_ sender: Any) {
+        document.screenshot.dropShadowStrength = dropShadowStrength.selectedSegment
         self.generatePreview()
     }
     
     @IBAction func changeDropShadowTarget(_ sender: Any) {
+        document.screenshot.dropShadowTarget = dropShadowTarget.selectedSegment
         self.generatePreview()
     }
     
     @objc func changeFontName(_ sender: NSMenuItem) {
+        document.screenshot.captionFontName = fontName.titleOfSelectedItem ?? ""
         self.generatePreview()
     }
     
@@ -216,7 +236,7 @@ class ViewController: NSViewController, NSTextViewDelegate {
 
         let selectedFontName = fontName.selectedItem?.title.trimmingCharacters(in: .whitespacesAndNewlines) ?? "HelveticaNeue-Medium"
         guard let font = NSFont(name: selectedFontName, size: baseFontSize) else { return nil }
-        let color = fountColor.color
+        let color = fontColor.color
 
         return [NSAttributedString.Key.paragraphStyle: ps, NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor: color]
     }
@@ -265,8 +285,26 @@ class ViewController: NSViewController, NSTextViewDelegate {
         screenshot.draw(at: CGPoint(x: 176, y: offsetY), from: .zero, operation: .sourceOver, fraction: 1)
     }
     
+    func updateUI() {
+        caption.string = document.screenshot.caption
+        fontName.selectItem(withTitle: document.screenshot.captionFontName)
+        fontSize.selectItem(withTag: document.screenshot.captionFontSize)
+        fontColor.color = document.screenshot.captionColor
+
+        if !document.screenshot.backgroundImage.isEmpty {
+            backgroundImage.selectItem(withTitle: document.screenshot.backgroundImage)
+        }
+
+        backgroundColorStart.color = document.screenshot.backgroundColorStart
+        backgroundColorEnd.color = document.screenshot.backgroundColorEnd
+
+        dropShadowStrength.selectedSegment = document.screenshot.dropShadowStrength
+        dropShadowTarget.selectedSegment = document.screenshot.dropShadowTarget
+    }
+    
     //MARK: - NSTextViewDelegate
     func textDidChange(_ notification: Notification) {
+        document.screenshot.caption = caption.string
         self.generatePreview()
     }
 }

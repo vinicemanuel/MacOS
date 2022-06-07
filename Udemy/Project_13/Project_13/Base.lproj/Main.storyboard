@@ -952,9 +952,9 @@
                         <outlet property="caption" destination="BNq-3a-KAs" id="jqf-X6-YNi"/>
                         <outlet property="dropShadowStrength" destination="Ayw-bW-ZLF" id="Seb-73-H7t"/>
                         <outlet property="dropShadowTarget" destination="2Te-Wv-eFr" id="TRP-Hu-aWM"/>
+                        <outlet property="fontColor" destination="3RE-JL-CsX" id="sXc-C2-GQ5"/>
                         <outlet property="fontName" destination="qjC-PJ-9YS" id="gAE-ok-lVL"/>
                         <outlet property="fontSize" destination="77A-oO-wU0" id="1IL-5G-8Fc"/>
-                        <outlet property="fountColor" destination="3RE-JL-CsX" id="sXc-C2-GQ5"/>
                         <outlet property="imageView" destination="4dQ-FM-B4r" id="XBb-xY-D7S"/>
                     </connections>
                 </viewController>
