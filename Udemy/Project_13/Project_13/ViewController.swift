@@ -20,10 +20,15 @@ class ViewController: NSViewController, NSTextViewDelegate {
     @IBOutlet weak var dropShadowStrength: NSSegmentedControl!
     @IBOutlet weak var dropShadowTarget: NSSegmentedControl!
     
+    var screenshotImage: NSImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.caption.delegate = self
+        
+        let recognizer = NSClickGestureRecognizer(target: self, action: #selector(importScreenshot))
+        imageView.addGestureRecognizer(recognizer)
         
         self.loadFonts()
         self.loadBackgroundImages()
@@ -70,6 +75,19 @@ class ViewController: NSViewController, NSTextViewDelegate {
         self.generatePreview()
     }
     
+    @objc func importScreenshot() {
+        let panel = NSOpenPanel()
+        panel.allowedFileTypes = ["jpg", "png"]
+
+        panel.begin { [unowned self] result in
+            if result == .OK {
+                guard let imageURL = panel.url else { return }
+                self.screenshotImage = NSImage(contentsOf: imageURL)
+                self.generatePreview()
+            }
+        }
+    }
+    
     func loadFonts() {
         guard let fontFile = Bundle.main.url(forResource: "fonts", withExtension: nil) else { return }
         guard let fonts = try? String(contentsOf: fontFile) else { return }
@@ -108,6 +126,8 @@ class ViewController: NSViewController, NSTextViewDelegate {
             self.drawBackgroundImage(rect: rect)
             self.drawColorOverlay(rect: rect)
             let captionOffset = self.drawCaption(rect: rect)
+            self.drawDevice(rect: rect, captionOffset: captionOffset)
+            self.drawScreenshot(rect: rect, captionOffset: captionOffset)
             
             return true
         }
@@ -186,6 +206,41 @@ class ViewController: NSViewController, NSTextViewDelegate {
         shadow.shadowColor = NSColor.black
         shadow.shadowBlurRadius = 50
         shadow.set()
+    }
+    
+    func drawDevice(rect: CGRect, captionOffset: CGFloat) {
+        guard let image = NSImage(named: "iPhone") else { return }
+
+        let offsetX = (rect.size.width - image.size.width) / 2
+        var offsetY = (rect.size.height - image.size.height) / 2
+        offsetY -= captionOffset
+
+        if dropShadowStrength.selectedSegment != 0 {
+            if dropShadowTarget.selectedSegment == 1 || dropShadowTarget.selectedSegment == 2 {
+                setShadow()
+            }
+        }
+
+        image.draw(at: CGPoint(x: offsetX, y: offsetY), from: .zero, operation: .sourceOver, fraction: 1)
+
+        if dropShadowStrength.selectedSegment == 2 {
+            if dropShadowTarget.selectedSegment == 1 || dropShadowTarget.selectedSegment == 2 {
+                // create a stronger drop shadow by drawing again
+                image.draw(at: CGPoint(x: offsetX, y: offsetY), from: .zero, operation: .sourceOver, fraction: 1)
+            }
+        }
+
+        // clear the shadow so it doesn't affect other stuff
+        let noShadow = NSShadow()
+        noShadow.set()
+    }
+    
+    func drawScreenshot(rect: CGRect, captionOffset: CGFloat) {
+        guard let screenshot = screenshotImage else { return }
+        screenshot.size = CGSize(width: 891, height: 1584)
+
+        let offsetY = 314 - captionOffset
+        screenshot.draw(at: CGPoint(x: 176, y: offsetY), from: .zero, operation: .sourceOver, fraction: 1)
     }
     
     //MARK: - NSTextViewDelegate
