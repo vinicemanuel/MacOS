@@ -44,7 +44,6 @@
 		091431AB28511DFB00AC65A3 = {
 			isa = PBXGroup;
 			children = (
-				091431CE285120A500AC65A3 /* Ball.swift */,
 				091431B628511DFB00AC65A3 /* Project_17 */,
 				091431B528511DFB00AC65A3 /* Products */,
 			);
@@ -61,6 +60,7 @@
 		091431B628511DFB00AC65A3 /* Project_17 */ = {
 			isa = PBXGroup;
 			children = (
+				091431CE285120A500AC65A3 /* Ball.swift */,
 				091431B728511DFB00AC65A3 /* AppDelegate.swift */,
 				091431B928511DFB00AC65A3 /* GameScene.sks */,
 				091431BD28511DFB00AC65A3 /* GameScene.swift */,

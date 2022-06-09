@@ -17,6 +17,21 @@ class GameScene: SKScene {
     
     var currentMatches = Set<Ball>()
     
+    var scoreLabel: SKLabelNode!
+    var score = 0 {
+        didSet {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+
+            if let formattedScore = formatter.string(from: score as NSNumber) {
+                scoreLabel.text = "Score: \(formattedScore)"
+            }
+        }
+    }
+    
+    var timer: SKShapeNode!
+    var gameStartTime: TimeInterval = 0
+    
     override func didMove(to view: SKView) {
         for x in 0 ..< ballsPerRow {
             var col = [Ball]()
@@ -28,7 +43,28 @@ class GameScene: SKScene {
 
             cols.append(col)
         }
-       
+        
+        scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue")
+        scoreLabel.text = "Score: 0"
+        scoreLabel.horizontalAlignmentMode = .left
+        scoreLabel.position = CGPoint(x: 55, y: frame.maxY - 55)
+        addChild(scoreLabel)
+        
+        timer = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 200, height: 40))
+        timer.fillColor = NSColor.green
+        timer.strokeColor = NSColor.clear
+        timer.position = CGPoint(x: 545, y: 539)
+        addChild(timer)
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        if gameStartTime == 0 {
+            gameStartTime = currentTime
+        }
+
+        let elapsed = (currentTime - gameStartTime)
+        let remaining = 100 - elapsed
+        timer.xScale = max(0, CGFloat(remaining) / 100)
     }
     
     func createBall(row: Int, col: Int, startOffScreen: Bool = false) -> Ball {
@@ -91,6 +127,17 @@ class GameScene: SKScene {
                 let ball = createBall(row: cols[columnIndex].count, col: columnIndex, startOffScreen: true)
                 cols[columnIndex].append(ball)
             }
+        }
+        
+        let newScore = currentMatches.count
+        
+        if newScore == 1 {
+            score -= 1000
+        } else if newScore == 2 {
+            // no change
+        } else {
+            let scoreToAdd = pow(2, Double(min(newScore, 16)))
+            score += Int(scoreToAdd)
         }
     }
     
