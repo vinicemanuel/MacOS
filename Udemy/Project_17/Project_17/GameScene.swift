@@ -44,7 +44,7 @@ class GameScene: SKScene {
             ball.position = finalPosition
             ball.position.y += 600
 
-            let action = SKAction.move(to: finalPosition, duration: 0.6)
+            let action = SKAction.move(to: finalPosition, duration: 0.4)
 
             ball.run(action) { [unowned self] in
                 self.isUserInteractionEnabled = true
@@ -63,6 +63,7 @@ class GameScene: SKScene {
         let location = event.location(in: self)
         guard let clickedBall = ball(at: location) else { return }
 
+        isUserInteractionEnabled = false
         currentMatches.removeAll()
         match(ball: clickedBall)
 
@@ -74,6 +75,22 @@ class GameScene: SKScene {
         // remove all matched balls
         for match in sortedMatches {
             destroy(match)
+        }
+        
+        // move down any balls that need it
+        for (columnIndex, col) in cols.enumerated() {
+            for (rowIndex, ball) in col.enumerated() {
+                ball.row = rowIndex
+
+                let action = SKAction.move(to: position(for: ball), duration: 0.4)
+                ball.run(action)
+            }
+
+            // create as many new balls as we need
+            while cols[columnIndex].count < ballsPerColumn {
+                let ball = createBall(row: cols[columnIndex].count, col: columnIndex, startOffScreen: true)
+                cols[columnIndex].append(ball)
+            }
         }
     }
     
