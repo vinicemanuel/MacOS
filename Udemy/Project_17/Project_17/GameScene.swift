@@ -15,6 +15,8 @@ class GameScene: SKScene {
     let ballsPerColumn = 10
     let ballsPerRow = 14
     
+    var currentMatches = Set<Ball>()
+    
     override func didMove(to view: SKView) {
         for x in 0 ..< ballsPerRow {
             var col = [Ball]()
@@ -57,9 +59,57 @@ class GameScene: SKScene {
         return ball
     }
     
+    override func mouseDown(with event: NSEvent) {
+        let location = event.location(in: self)
+        guard let clickedBall = ball(at: location) else { return }
+
+        currentMatches.removeAll()
+        match(ball: clickedBall)
+
+        // make sure we remove higher-up balls first
+        let sortedMatches = currentMatches.sorted {
+            $0.row > $1.row
+        }
+
+        // remove all matched balls
+        for match in sortedMatches {
+            destroy(match)
+        }
+    }
+    
     func position(for ball: Ball) -> CGPoint {
         let x = 72 + ballSize * CGFloat(ball.col)
         let y = 50 + ballSize * CGFloat(ball.row)
         return CGPoint(x: x, y: y)
+    }
+    
+    func ball(at point: CGPoint) -> Ball? {
+        let balls = nodes(at: point).compactMap { $0 as? Ball }
+        return balls.first
+    }
+    
+    func match(ball originalBall: Ball) {
+        var checkBalls = [Ball?]()
+
+        currentMatches.insert(originalBall)
+        let pos = originalBall.position
+
+        checkBalls.append(ball(at: CGPoint(x: pos.x, y: pos.y - ballSize)))
+        checkBalls.append(ball(at: CGPoint(x: pos.x, y: pos.y + ballSize)))
+        checkBalls.append(ball(at: CGPoint(x: pos.x - ballSize, y: pos.y)))
+        checkBalls.append(ball(at: CGPoint(x: pos.x + ballSize, y: pos.y)))
+
+        for case let check? in checkBalls {
+            if currentMatches.contains(check) { continue }
+
+            if check.name == originalBall.name {
+                match(ball: check)
+            }
+        }
+    }
+    
+    func destroy(_ ball: Ball) {
+        cols[ball.col].remove(at: ball.row)
+        ball.removeFromParent()
     }
 }
