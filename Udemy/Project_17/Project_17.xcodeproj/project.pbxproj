@@ -15,6 +15,7 @@
 		091431C528511DFC00AC65A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 091431C328511DFC00AC65A3 /* Main.storyboard */; };
 		091431CD28511FF700AC65A3 /* balls.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 091431CC28511FF700AC65A3 /* balls.atlas */; };
 		091431CF285120A500AC65A3 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091431CE285120A500AC65A3 /* Ball.swift */; };
+		091431D128522B6100AC65A3 /* Fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 091431D028522B6100AC65A3 /* Fire.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		091431C628511DFC00AC65A3 /* Project_17.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Project_17.entitlements; sourceTree = "<group>"; };
 		091431CC28511FF700AC65A3 /* balls.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = balls.atlas; sourceTree = "<group>"; };
 		091431CE285120A500AC65A3 /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		091431D028522B6100AC65A3 /* Fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fire.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				091431B728511DFB00AC65A3 /* AppDelegate.swift */,
 				091431B928511DFB00AC65A3 /* GameScene.sks */,
 				091431BD28511DFB00AC65A3 /* GameScene.swift */,
+				091431D028522B6100AC65A3 /* Fire.sks */,
 				091431BF28511DFB00AC65A3 /* ViewController.swift */,
 				091431C128511DFC00AC65A3 /* Assets.xcassets */,
 				091431C328511DFC00AC65A3 /* Main.storyboard */,
@@ -134,6 +137,7 @@
 				091431CD28511FF700AC65A3 /* balls.atlas in Resources */,
 				091431BA28511DFB00AC65A3 /* GameScene.sks in Resources */,
 				091431C228511DFC00AC65A3 /* Assets.xcassets in Resources */,
+				091431D128522B6100AC65A3 /* Fire.sks in Resources */,
 				091431C528511DFC00AC65A3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

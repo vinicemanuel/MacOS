@@ -173,6 +173,15 @@ class GameScene: SKScene {
     }
     
     func destroy(_ ball: Ball) {
+        if let particles = SKEmitterNode(fileNamed: "Fire") {
+            particles.position = ball.position
+            addChild(particles)
+
+            let wait = SKAction.wait(forDuration: TimeInterval(particles.particleLifetime))
+            let sequence = SKAction.sequence([wait, SKAction.removeFromParent()])
+            particles.run(sequence)
+        }
+        
         cols[ball.col].remove(at: ball.row)
         ball.removeFromParent()
     }
